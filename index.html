@@ -16,7 +16,6 @@
             --primary: #0f67eb;
             --primary-hover: #0b4ebd;
             --text-light: #ffffff;
-            /* Asosiy matn rangi */
             --text-gray: #8a93a0;
             --border-color: #202835;
             --bg-liked-color: rgba(0, 0, 0, 0.7)
@@ -29,7 +28,6 @@
             --bg-card: #ffffff;
             --bg-liked-color: #ffffff;
             --text-light: #111827;
-            /* Kunduzgi rejimda matnlar qora bo'ladi */
             --text-gray: #637381;
             --border-color: #a0c6f4;
         }
@@ -47,7 +45,7 @@
             display: flex;
             min-height: 100vh;
             transition: background-color 0.3s, color 0.3s;
-            /* Silliq o'zgarish */
+            overflow-x: hidden; /* Gorizontal skrollni yopish */
         }
 
         /* --- CHAP MENU --- */
@@ -61,20 +59,14 @@
             border-right: 1px solid var(--border-color);
             padding: 20px 0;
             overflow-y: auto;
-            z-index: 100;
+            z-index: 1000;
             display: flex;
             flex-direction: column;
-            transition: background-color 0.3s, border-color 0.3s;
+            transition: transform 0.3s ease, background-color 0.3s, border-color 0.3s;
         }
 
-        .sidebar::-webkit-scrollbar {
-            width: 5px;
-        }
-
-        .sidebar::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 5px;
-        }
+        .sidebar::-webkit-scrollbar { width: 5px; }
+        .sidebar::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 5px; }
 
         .logo {
             font-size: 24px;
@@ -87,15 +79,8 @@
             gap: 10px;
         }
 
-        .logo span {
-            color: var(--text-light);
-            transition: color 0.3s;
-        }
-
-        .nav-menu {
-            list-style: none;
-            flex: 1;
-        }
+        .logo span { color: var(--text-light); transition: color 0.3s; }
+        .nav-menu { list-style: none; flex: 1; }
 
         .nav-item {
             padding: 12px 25px;
@@ -111,33 +96,25 @@
             border-right: 3px solid transparent;
         }
 
-        .nav-item:hover,
-        .nav-item.active {
+        .nav-item:hover, .nav-item.active {
             color: var(--primary);
             background-color: rgba(15, 103, 235, 0.05);
             border-right: 3px solid var(--primary);
         }
 
-        .nav-item i {
-            font-size: 18px;
-            width: 20px;
-            text-align: center;
-        }
+        .nav-item i { font-size: 18px; width: 20px; text-align: center; }
+        .nav-title { padding: 20px 25px 10px; font-size: 14px; color: var(--text-gray); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .bottom-menu { margin-top: auto; border-top: 1px solid var(--border-color); padding-top: 10px; transition: border-color 0.3s; }
 
-        .nav-title {
-            padding: 20px 25px 10px;
-            font-size: 14px;
-            color: var(--text-gray);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .bottom-menu {
-            margin-top: auto;
-            border-top: 1px solid var(--border-color);
-            padding-top: 10px;
-            transition: border-color 0.3s;
+        /* QORONG'I EKRAN (Telefonda menyu ochilganda orqa fonni xiralashtirish uchun) */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 900;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
         /* --- ASOSIY QISM --- */
@@ -146,6 +123,8 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            width: calc(100% - 260px);
+            transition: margin-left 0.3s, width 0.3s;
         }
 
         /* --- QIDIRUV --- */
@@ -163,6 +142,16 @@
             transition: background-color 0.3s, border-color 0.3s;
         }
 
+        /* BURGER MENYU TUGMASI (Faqat telefonda ko'rinadi) */
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            color: var(--text-light);
+            cursor: pointer;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+
         .search-bar {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -175,29 +164,11 @@
             transition: 0.3s;
         }
 
-        .search-bar:focus-within {
-            border-color: var(--primary);
-            box-shadow: 0 0 10px rgba(15, 103, 235, 0.2);
-        }
+        .search-bar:focus-within { border-color: var(--primary); box-shadow: 0 0 10px rgba(15, 103, 235, 0.2); }
+        .search-bar input { background: none; border: none; color: var(--text-light); outline: none; width: 100%; font-size: 15px; padding-left: 10px; transition: color 0.3s; }
+        .search-bar i { color: var(--text-gray); }
 
-        .search-bar input {
-            background: none;
-            border: none;
-            color: var(--text-light);
-            outline: none;
-            width: 100%;
-            font-size: 15px;
-            padding-left: 10px;
-            transition: color 0.3s;
-        }
-
-        .search-bar i {
-            color: var(--text-gray);
-        }
-
-        .content-wrapper {
-            padding: 30px 40px;
-        }
+        .content-wrapper { padding: 30px 40px; }
 
         /* --- KUN KINOSI BANNERI --- */
         .hero-banner {
@@ -217,377 +188,130 @@
             border: 1px solid var(--border-color);
         }
 
-        .hero-content {
-            max-width: 600px;
-            z-index: 2;
-        }
-
-        .badge {
-            background-color: var(--primary);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 15px;
-        }
-
-        .badge.year {
-            background-color: #e50914;
-            margin-left: 10px;
-        }
-
-        /* Banner matnlari doim oq bo'lib qolishi kerak (fon rasm qorong'i) */
-        .hero-title {
-            font-size: 36px;
-            font-weight: 900;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            color: #ffffff;
-        }
-
-        .hero-plot {
-            color: #cccccc;
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 25px;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
+        .hero-content { max-width: 600px; z-index: 2; }
+        .badge { background-color: var(--primary); color: white; padding: 5px 12px; border-radius: 4px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 15px; }
+        .badge.year { background-color: #e50914; margin-left: 10px; }
+        .hero-title { font-size: 36px; font-weight: 900; margin-bottom: 15px; text-transform: uppercase; color: #ffffff; }
+        .hero-plot { color: #cccccc; font-size: 14px; line-height: 1.6; margin-bottom: 25px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
         .btn-play {
-            background-color: var(--primary);
-            color: white;
-            text-decoration: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 14px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.3s;
-            border: none;
-            cursor: pointer;
+            background-color: var(--primary); color: white; text-decoration: none; padding: 12px 25px;
+            border-radius: 8px; font-weight: 600; font-size: 14px; display: inline-flex; align-items: center;
+            gap: 8px; transition: 0.3s; border: none; cursor: pointer;
         }
-
-        .btn-play:hover {
-            background-color: var(--primary-hover);
-            transform: scale(1.05);
-        }
+        .btn-play:hover { background-color: var(--primary-hover); transform: scale(1.05); }
 
         /* --- JANRLAR --- */
-        .section-header {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--text-light);
-            border-left: 4px solid var(--primary);
-            padding-left: 10px;
-            transition: color 0.3s;
-        }
-
-        .genres-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 15px;
-            margin-bottom: 40px;
-        }
-
-        .genre-box {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .genre-box i {
-            font-size: 28px;
-            color: var(--text-gray);
-            margin-bottom: 10px;
-            display: block;
-            transition: 0.3s;
-        }
-
-        .genre-box span {
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-gray);
-            transition: 0.3s;
-        }
-
-        .genre-box:hover {
-            border-color: var(--primary);
-            background-color: rgba(15, 103, 235, 0.05);
-            transform: translateY(-5px);
-        }
-
-        .genre-box:hover i,
-        .genre-box:hover span {
-            color: var(--primary);
-        }
+        .section-header { font-size: 22px; font-weight: 700; margin-bottom: 20px; color: var(--text-light); border-left: 4px solid var(--primary); padding-left: 10px; transition: color 0.3s; }
+        .genres-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; margin-bottom: 40px; }
+        .genre-box { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px 10px; text-align: center; cursor: pointer; transition: all 0.3s ease; }
+        .genre-box i { font-size: 28px; color: var(--text-gray); margin-bottom: 10px; display: block; transition: 0.3s; }
+        .genre-box span { font-size: 13px; font-weight: 500; color: var(--text-gray); transition: 0.3s; }
+        .genre-box:hover { border-color: var(--primary); background-color: rgba(15, 103, 235, 0.05); transform: translateY(-5px); }
+        .genre-box:hover i, .genre-box:hover span { color: var(--primary); }
 
         /* --- KINOLAR RO'YXATI --- */
-        .movies-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-        }
+        .movies-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        .movie-card { background-color: var(--bg-card); border-radius: 10px; overflow: hidden; position: relative; cursor: pointer; transition: 0.3s; text-decoration: none; border: 1px solid var(--border-color); }
+        .movie-card:hover { transform: scale(1.03); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); border-color: var(--primary); }
+        .movie-poster { width: 100%; height: 300px; object-fit: cover; }
+        .movie-info { padding: 15px; }
+        .movie-title { font-size: 15px; font-weight: 600; color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px; transition: color 0.3s; }
+        .movie-meta { font-size: 12px; color: var(--text-gray); }
 
-        .movie-card {
-            background-color: var(--bg-card);
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
-            border: 1px solid var(--border-color);
-        }
-
-        .movie-card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-            border-color: var(--primary);
-        }
-
-        .movie-poster {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-        }
-
-        .movie-info {
-            padding: 15px;
-        }
-
-        .movie-title {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-light);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-bottom: 5px;
-            transition: color 0.3s;
-        }
-
-        .movie-meta {
-            font-size: 12px;
-            color: var(--text-gray);
-        }
-
-        .quality-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: var(--primary);
-            color: white;
-            font-size: 11px;
-            font-weight: bold;
-            padding: 3px 6px;
-            border-radius: 4px;
-        }
-
-        .wrapper-badges {
-            display: flex;
-            flex-direction: column;
-            position: absolute;
-            right: 10px;
-            top: 10px;
-            gap: 5px;
-        }
-
-        .rating-badge {
-            background-color: var(--bg-liked-color);
-            color: #ffc107;
-            font-size: 12px;
-            font-weight: bold;
-            padding: 4px 8px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            border: var(--border-color);
-        }
-
-        .liked-badge {
-            background-color: var(--bg-liked-color);
-            color: var(--text-light);
-            font-size: 14px;
-            padding: 4px 8px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.3s;
-            z-index: 10;
-        }
-
-        .liked-badge:hover {
-            transform: scale(1.1);
-        }
-
-        .empty-msg {
-            color: var(--text-gray);
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 40px;
-            font-size: 16px;
-            background: var(--bg-card);
-            border-radius: 10px;
-            border: 1px dashed var(--border-color);
-            transition: background 0.3s, border-color 0.3s;
-        }
+        .quality-badge { position: absolute; top: 10px; left: 10px; background-color: var(--primary); color: white; font-size: 11px; font-weight: bold; padding: 3px 6px; border-radius: 4px; }
+        .wrapper-badges { display: flex; flex-direction: column; position: absolute; right: 10px; top: 10px; gap: 5px; }
+        .rating-badge { background-color: var(--bg-liked-color); color: #ffc107; font-size: 12px; font-weight: bold; padding: 4px 8px; border-radius: 4px; display: flex; align-items: center; gap: 4px; border: var(--border-color); }
+        .liked-badge { background-color: var(--bg-liked-color); color: var(--text-light); font-size: 14px; padding: 4px 8px; border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: 0.3s; z-index: 10; }
+        .liked-badge:hover { transform: scale(1.1); }
+        .empty-msg { color: var(--text-gray); grid-column: 1 / -1; text-align: center; padding: 40px; font-size: 16px; background: var(--bg-card); border-radius: 10px; border: 1px dashed var(--border-color); transition: background 0.3s, border-color 0.3s; }
 
         /* --- SOZLAMALAR BO'LIMI --- */
-        #settingsSection {
-            display: none;
-            padding: 30px 40px;
-            animation: fadeIn 0.4s ease-in-out;
+        #settingsSection { display: none; padding: 30px 40px; animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .settings-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 30px; max-width: 600px; margin-bottom: 20px; transition: 0.3s; }
+        .settings-title { font-size: 20px; font-weight: 700; margin-bottom: 20px; color: var(--text-light); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; transition: color 0.3s; }
+        .settings-group { margin-bottom: 25px; }
+        .settings-group label { display: block; margin-bottom: 15px; color: var(--text-gray); font-size: 14px; line-height: 1.5; }
+        .color-picker { display: flex; gap: 15px; }
+        .color-btn { width: 40px; height: 40px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: all 0.3s ease; }
+        .color-btn:hover, .color-btn.active { transform: scale(1.15); border-color: var(--text-gray); box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); }
+        .btn-danger { background-color: rgba(229, 9, 20, 0.1); color: #e50914; border: 1px solid #e50914; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px; transition: 0.3s; display: inline-flex; align-items: center; gap: 10px; }
+        .btn-danger:hover { background-color: #e50914; color: white; box-shadow: 0 5px 15px rgba(229, 9, 20, 0.4); }
+        .btn-theme-toggle { background-color: var(--bg-main); color: var(--text-light); border: 1px solid var(--border-color); padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px; transition: 0.3s; display: inline-flex; align-items: center; gap: 10px; }
+        .btn-theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* =========================================
+           MOBIL QURILMALAR UCHUN KODLAR (RESPONSIVE) 
+           ========================================= */
+        @media (max-width: 900px) {
+            .hero-title { font-size: 28px; }
+            .movies-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+            .movie-poster { height: 230px; }
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; } /* Burgerni ko'rsatish */
+            
+            .header { padding: 0 20px; justify-content: flex-start; }
+            .search-bar { max-width: 100%; }
+            
+            /* Menyuni chapga yashirib qo'yish */
+            .sidebar { transform: translateX(-100%); }
+            
+            /* Menyu ochilganda ko'rinishi */
+            .sidebar.active { transform: translateX(0); box-shadow: 5px 0 15px rgba(0,0,0,0.5); }
+
+            /* Asosiy qismni ekranga to'liq moslash */
+            .main-content { margin-left: 0; width: 100%; }
+            .content-wrapper { padding: 20px; }
+
+            /* Banner dizaynini telefonga moslash */
+            .hero-banner { 
+                height: auto; 
+                padding: 30px 20px; 
+                background: linear-gradient(to bottom, rgba(26, 15, 20, 0.8) 10%, #1a0f14 90%), url('https://placehold.co/1920x1080/1e1e24/a9b0c0?text=Kun+Kinosi');
+                background-size: cover;
+                background-position: center;
+                text-align: center; /* Telefonda matn markazda turadi */
             }
+            .hero-content { display: flex; flex-direction: column; align-items: center; }
+            .hero-plot { -webkit-line-clamp: 4; }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+            .genres-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
+            .genre-box { padding: 15px 5px; }
+            .genre-box i { font-size: 24px; }
+            
+            .movies-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; }
+            .movie-poster { height: 200px; }
 
-        .settings-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 30px;
-            max-width: 600px;
-            margin-bottom: 20px;
-            transition: 0.3s;
-        }
-
-        .settings-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--text-light);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-            transition: color 0.3s;
-        }
-
-        .settings-group {
-            margin-bottom: 25px;
-        }
-
-        .settings-group label {
-            display: block;
-            margin-bottom: 15px;
-            color: var(--text-gray);
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        .color-picker {
-            display: flex;
-            gap: 15px;
-        }
-
-        .color-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid transparent;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .color-btn:hover,
-        .color-btn.active {
-            transform: scale(1.15);
-            border-color: var(--text-gray);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-danger {
-            background-color: rgba(229, 9, 20, 0.1);
-            color: #e50914;
-            border: 1px solid #e50914;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-danger:hover {
-            background-color: #e50914;
-            color: white;
-            box-shadow: 0 5px 15px rgba(229, 9, 20, 0.4);
-        }
-
-        /* REJIM TUGMASI (Tungi/Kunduzgi) */
-        .btn-theme-toggle {
-            background-color: var(--bg-main);
-            color: var(--text-light);
-            border: 1px solid var(--border-color);
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-theme-toggle:hover {
-            border-color: var(--primary);
-            color: var(--primary);
+            #settingsSection { padding: 20px; }
+            .color-picker { flex-wrap: wrap; }
         }
     </style>
 </head>
 
 <body>
 
-    <aside class="sidebar">
+    <div class="overlay" id="overlay" onclick="toggleMobileMenu()"></div>
+
+    <aside class="sidebar" id="sidebar">
         <div class="logo">
             <i class="fas fa-play"></i> ASIL<span>MEDIA</span>
         </div>
 
         <ul class="nav-menu">
-            <li><a class="nav-item active" onclick="showHome(); filterMovies('barchasi', this)"><i
-                        class="fas fa-home"></i> Bosh Sahifa</a></li>
+            <li><a class="nav-item active" onclick="showHome(); filterMovies('barchasi', this)"><i class="fas fa-home"></i> Bosh Sahifa</a></li>
             <li><a class="nav-item" onclick="showFavorites(this)"><i class="fas fa-heart"></i> Sevimlilar</a></li>
 
             <div class="nav-title">Bo'limlar</div>
 
-            <li><a class="nav-item" onclick="showHome(); filterMovies('Jangari', this)"><i class="fas fa-khanda"></i>
-                    Jangari</a></li>
-            <li><a class="nav-item" onclick="showHome(); filterMovies('Fantastika', this)"><i class="fas fa-rocket"></i>
-                    Fantastika</a></li>
-            <li><a class="nav-item" onclick="showHome(); filterMovies('Serial', this)"><i class="fas fa-film"></i>
-                    Seriallar</a></li>
-            <li><a class="nav-item" onclick="showHome(); filterMovies('Multfilm', this)"><i class="fas fa-child"></i>
-                    Multfilmlar</a></li>
-                     <li><a class="nav-item" onclick="showHome(); filterMovies('Bolalar uchun', this)"><i class="fas fa-child"></i>
-                    Bolalar uchun</a></li>
-            <li><a class="nav-item" onclick="showHome(); filterMovies('Dahshat', this)"><i class="fas fa-ghost"></i>
-                    Qo'rqinchli</a></li>
+            <li><a class="nav-item" onclick="showHome(); filterMovies('Jangari', this)"><i class="fas fa-khanda"></i> Jangari</a></li>
+            <li><a class="nav-item" onclick="showHome(); filterMovies('Fantastika', this)"><i class="fas fa-rocket"></i> Fantastika</a></li>
+            <li><a class="nav-item" onclick="showHome(); filterMovies('Serial', this)"><i class="fas fa-film"></i> Seriallar</a></li>
+            <li><a class="nav-item" onclick="showHome(); filterMovies('Multfilm', this)"><i class="fas fa-child"></i> Multfilmlar</a></li>
+            <li><a class="nav-item" onclick="showHome(); filterMovies('Bolalar uchun', this)"><i class="fas fa-baby"></i> Bolalar uchun</a></li>
+            <li><a class="nav-item" onclick="showHome(); filterMovies('Dahshat', this)"><i class="fas fa-ghost"></i> Qo'rqinchli</a></li>
         </ul>
 
         <div class="bottom-menu">
@@ -597,10 +321,11 @@
 
     <main class="main-content">
         <header class="header">
+            <i class="fas fa-bars menu-toggle" onclick="toggleMobileMenu()"></i>
+            
             <div class="search-bar">
                 <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Kino nomini yozing..."
-                    oninput="searchMovie(this.value)">
+                <input type="text" id="searchInput" placeholder="Kino nomini yozing..." oninput="searchMovie(this.value)">
             </div>
         </header>
 
@@ -608,33 +333,26 @@
 
             <div class="hero-banner" id="heroBanner">
                 <div class="hero-content">
-                    <div class="badge" id="heroRating"><i class="fas fa-star"></i> 0.0</div>
-                    <div class="badge year" id="heroYear">Yil</div>
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <div class="badge" id="heroRating"><i class="fas fa-star"></i> 0.0</div>
+                        <div class="badge year" id="heroYear" style="margin: 0;">Yil</div>
+                    </div>
                     <h1 class="hero-title" id="heroTitle">Kun Kinosi</h1>
                     <p class="hero-plot" id="heroPlot">Kutib turing...</p>
-                    <a href="#" id="watchBtn" target="_blank" class="btn-play"><i class="fas fa-play"></i> Kinoni
-                        ko'rish</a>
+                    <a href="#" id="watchBtn" target="_blank" class="btn-play"><i class="fas fa-play"></i> Kinoni ko'rish</a>
                 </div>
             </div>
 
             <div class="section-header" id="categoriesHeader">Kategoriyalar</div>
             <div class="genres-grid" id="genresGrid">
-                <div class="genre-box" onclick="filterMovies('barchasi')"><i
-                        class="fas fa-border-all"></i><span>Barchasi</span></div>
-                <div class="genre-box" onclick="filterMovies('Jangari')"><i
-                        class="fas fa-khanda"></i><span>Jangari</span></div>
-                <div class="genre-box" onclick="filterMovies('Komediya')"><i
-                        class="fas fa-laugh-squint"></i><span>Komediya</span></div>
-                <div class="genre-box" onclick="filterMovies('Fantastika')"><i
-                        class="fas fa-rocket"></i><span>Fantastika</span></div>
-                <div class="genre-box" onclick="filterMovies('Drama')"><i
-                        class="fas fa-masks-theater"></i><span>Drama</span></div>
-                <div class="genre-box" onclick="filterMovies('Dahshat')"><i
-                        class="fas fa-ghost"></i><span>Qo'rqinchli</span></div>
-                <div class="genre-box" onclick="filterMovies('Multfilm')"><i
-                        class="fas fa-magic"></i><span>Multfilm</span></div>
-                <div class="genre-box" onclick="filterMovies('Hind kinolari')"><i class="fas fa-om"></i><span>Hind
-                        kinolari</span></div>
+                <div class="genre-box" onclick="filterMovies('barchasi')"><i class="fas fa-border-all"></i><span>Barchasi</span></div>
+                <div class="genre-box" onclick="filterMovies('Jangari')"><i class="fas fa-khanda"></i><span>Jangari</span></div>
+                <div class="genre-box" onclick="filterMovies('Komediya')"><i class="fas fa-laugh-squint"></i><span>Komediya</span></div>
+                <div class="genre-box" onclick="filterMovies('Fantastika')"><i class="fas fa-rocket"></i><span>Fantastika</span></div>
+                <div class="genre-box" onclick="filterMovies('Drama')"><i class="fas fa-masks-theater"></i><span>Drama</span></div>
+                <div class="genre-box" onclick="filterMovies('Dahshat')"><i class="fas fa-ghost"></i><span>Qo'rqinchli</span></div>
+                <div class="genre-box" onclick="filterMovies('Multfilm')"><i class="fas fa-magic"></i><span>Multfilm</span></div>
+                <div class="genre-box" onclick="filterMovies('Hind kinolari')"><i class="fas fa-om"></i><span>Hind kinolari</span></div>
             </div>
 
             <div class="section-header" id="gridTitle">Eng Yangilari</div>
@@ -659,16 +377,11 @@
                 <div class="settings-group">
                     <label>Tugmalar va detallar rangini tanlang:</label>
                     <div class="color-picker">
-                        <div class="color-btn" style="background-color: #0f67eb;"
-                            onclick="changeTheme('#0f67eb', '#0b4ebd')"></div>
-                        <div class="color-btn" style="background-color: #00b865;"
-                            onclick="changeTheme('#00b865', '#009653')"></div>
-                        <div class="color-btn" style="background-color: #e50914;"
-                            onclick="changeTheme('#e50914', '#b20710')"></div>
-                        <div class="color-btn" style="background-color: #8e44ad;"
-                            onclick="changeTheme('#8e44ad', '#732d91')"></div>
-                        <div class="color-btn" style="background-color: #f39c12;"
-                            onclick="changeTheme('#f39c12', '#d68910')"></div>
+                        <div class="color-btn" style="background-color: #0f67eb;" onclick="changeTheme('#0f67eb', '#0b4ebd')"></div>
+                        <div class="color-btn" style="background-color: #00b865;" onclick="changeTheme('#00b865', '#009653')"></div>
+                        <div class="color-btn" style="background-color: #e50914;" onclick="changeTheme('#e50914', '#b20710')"></div>
+                        <div class="color-btn" style="background-color: #8e44ad;" onclick="changeTheme('#8e44ad', '#732d91')"></div>
+                        <div class="color-btn" style="background-color: #f39c12;" onclick="changeTheme('#f39c12', '#d68910')"></div>
                     </div>
                 </div>
             </div>
@@ -676,10 +389,8 @@
             <div class="settings-card">
                 <div class="settings-title">Ma'lumotlarni tozalash</div>
                 <div class="settings-group">
-                    <label>Sayt siz tasodifiy tanlagan yoki "Ko'rganman" deb belgilagan kinolarni eslab qoladi. Ularni
-                        qayta tiklash uchun xotirani tozalang.</label>
-                    <button class="btn-danger" onclick="clearMemory()"><i class="fas fa-trash-alt"></i> Ko'rilganlar
-                        xotirasini tozalash</button>
+                    <label>Sayt siz tasodifiy tanlagan yoki "Ko'rganman" deb belgilagan kinolarni eslab qoladi. Ularni qayta tiklash uchun xotirani tozalang.</label>
+                    <button class="btn-danger" onclick="clearMemory()"><i class="fas fa-trash-alt"></i> Ko'rilganlar xotirasini tozalash</button>
                 </div>
             </div>
         </div>
@@ -691,7 +402,6 @@
         let seenMovies = [];
         let likedMovies = JSON.parse(localStorage.getItem('likedMovies')) || [];
 
-        // --- REJIMNI (THEME) XOTIRADAN O'QIB OLISH ---
         let isLightMode = localStorage.getItem('lightMode') === 'true';
         if (isLightMode) {
             document.body.classList.add('light-theme');
@@ -705,7 +415,7 @@
 
                 setHeroBanner();
                 filterMovies('barchasi');
-                updateThemeBtnText(); // Yuklanganda tugma matnini to'g'rilaydi
+                updateThemeBtnText(); 
             } catch (error) {
                 console.error("Xato:", error);
                 document.getElementById('gridTitle').textContent = "Xatolik: movies.json fayli topilmadi!";
@@ -714,14 +424,35 @@
 
         window.onload = loadMovies;
 
-        // --- REJIMNI O'ZGARTIRISH FUNKSIYASI ---
+        // --- MOBIL MENYUNI OCHISH/YOPISH ---
+        function toggleMobileMenu() {
+            document.getElementById('sidebar').classList.toggle('active');
+            
+            const overlay = document.getElementById('overlay');
+            if (overlay.style.display === 'block') {
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.style.display = 'none', 300);
+            } else {
+                overlay.style.display = 'block';
+                setTimeout(() => overlay.style.opacity = '1', 10);
+            }
+        }
+
+        // --- MENYUDAN BIROR NARSA TANLANSA, MENYU YOPILADI ---
+        function closeMobileMenu() {
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('active');
+                const overlay = document.getElementById('overlay');
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.style.display = 'none', 300);
+            }
+        }
+
         function toggleThemeMode() {
             const body = document.body;
-            body.classList.toggle('light-theme'); // Klassni qo'shish yoki olib tashlash
-
+            body.classList.toggle('light-theme'); 
             isLightMode = body.classList.contains('light-theme');
-            localStorage.setItem('lightMode', isLightMode); // Xotirada saqlash
-
+            localStorage.setItem('lightMode', isLightMode); 
             updateThemeBtnText();
         }
 
@@ -745,13 +476,20 @@
             document.getElementById('heroRating').innerHTML = `<i class="fas fa-star"></i> ${randomMovie.rating}`;
             document.getElementById('heroYear').textContent = randomMovie.year;
             document.getElementById('watchBtn').href = randomMovie.link;
-            document.getElementById('heroBanner').style.backgroundImage = `linear-gradient(to right, #1a0f14 20%, rgba(26, 15, 20, 0.95) 50%, rgba(0,0,0,0.1)), url('${randomMovie.poster}')`;
+            
+            // Telefonda banner orqa foni moslashishi uchun gradient pastga qarab yo'naltirilgan
+            if(window.innerWidth <= 768) {
+                document.getElementById('heroBanner').style.backgroundImage = `linear-gradient(to bottom, rgba(26, 15, 20, 0.4) 10%, #1a0f14 90%), url('${randomMovie.poster}')`;
+            } else {
+                document.getElementById('heroBanner').style.backgroundImage = `linear-gradient(to right, #1a0f14 20%, rgba(26, 15, 20, 0.95) 50%, rgba(0,0,0,0.1)), url('${randomMovie.poster}')`;
+            }
         }
 
         function filterMovies(genre, sidebarElement = null) {
             if (sidebarElement) {
                 document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
                 sidebarElement.classList.add('active');
+                closeMobileMenu(); // Telefonda bosganda menyuni yopib yuboradi
             }
 
             let filteredList = [];
@@ -795,7 +533,6 @@
             movies.forEach(movie => {
                 let isLiked = likedMovies.includes(movie.title);
                 let heartClass = isLiked ? 'fas fa-heart' : 'far fa-heart';
-                // Kunduzgi rejimda oddiy yurakcha oq emas, dinamik o'zgaruvchi rang (var(--text-light)) bo'lishi uchun
                 let heartColor = isLiked ? '#e50914' : 'var(--text-light)';
 
                 htmlContent += `
@@ -828,7 +565,7 @@
             if (index > -1) {
                 likedMovies.splice(index, 1);
                 icon.className = 'far fa-heart';
-                icon.style.color = 'var(--text-light)'; // Qora yoki oq rejimga moslashadi
+                icon.style.color = 'var(--text-light)'; 
                 icon.style.transform = 'scale(1)';
             } else {
                 likedMovies.push(movieTitle);
@@ -844,6 +581,7 @@
         function showFavorites(element) {
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             element.classList.add('active');
+            closeMobileMenu();
 
             document.getElementById('settingsSection').style.display = 'none';
             document.getElementById('mainContentWrapper').style.display = 'block';
@@ -868,6 +606,8 @@
         function showSettings(element) {
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             element.classList.add('active');
+            closeMobileMenu();
+
             document.getElementById('mainContentWrapper').style.display = 'none';
             document.getElementById('settingsSection').style.display = 'block';
         }
